@@ -27,9 +27,10 @@ const start = new Scenes.WizardScene('start',
         ctx.scene.session.game.first_sticker_id = sticker.file_id;
         // Create game
         const now = Date.now();
+        const duration = 10; // miutes
         await Game.create({
             started_at: now,
-            closed_at: now + 60 * 60 * 1000,
+            closed_at: now + duration * 60 * 1000,
             ...ctx.scene.session.game
         });
         console.log(`✅Game created by ${ctx.from.first_name}#${ctx.from.id}`);
@@ -38,7 +39,7 @@ const start = new Scenes.WizardScene('start',
         await ctx.telegram.sendMessage(process.env.GROUP_ID, `Game started.\nSelect one of the sticker set below.\nhttps://t.me/addstickers/${ sticker.set_name }`);
         await ctx.scene.leave();
         // Start cron job that show result
-        runResultJob(ctx, now, 10);
+        runResultJob(ctx, now, duration);
     }
 );
 
