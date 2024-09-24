@@ -1,9 +1,8 @@
 const Game = require('./models/game');
-const memberMiddleware = require('./middlewares/member');
 const groupMiddleware = require('./middlewares/group');
 
 module.exports = (bot) => {
-	bot.on('sticker', groupMiddleware, memberMiddleware, async (ctx) => {
+	bot.on('sticker', groupMiddleware, async (ctx) => {
         if ((ctx.message.chat.type === 'group' || ctx.message.chat.type === 'supergroup') && ctx.message.chat.id == process.env.GROUP_ID) {
             const now = Date.now();
             
